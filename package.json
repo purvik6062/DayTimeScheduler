@@ -1,6 +1,6 @@
 {
-  "name": "@captain/dayandtimescheduler",
-  "version": "1.0.8",
+  "name": "@captainwalterdev/daytimescheduler",
+  "version": "1.0.12",
   "description": "A React component to help with scheduling a day and time.",
   "scripts": {
     "test": "jest",
@@ -18,20 +18,20 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/purvik6062/dayAndTimeScheduler.git"
+    "url": "git+https://github.com/purvik6062/DayTimeScheduler.git"
   },
   "keywords": [
     "react",
     "scheduling",
     "day-and-time-scheduler"
   ],
-  "author": "captainwalterdev",
+  "author": "captainwalter",
   "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/purvik6062/dayAndTimeScheduler/issues"
+    "url": "https://github.com/purvik6062/DayTimeScheduler/issues"
   },
-  "homepage": "https://github.com/purvik6062/dayAndTimeScheduler#readme",
+  "homepage": "https://github.com/purvik6062/DayTimeScheduler#readme",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -46,8 +46,8 @@
     "jest": "^24.8.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.17.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^18",
+    "react-dom": "^18",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
@@ -59,7 +59,7 @@
     "styled-components": "^4.2.0"
   },
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^18"
   },
   "directories": {
     "doc": "docs",
