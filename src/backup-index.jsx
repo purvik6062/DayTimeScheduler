@@ -24,8 +24,7 @@ function DayTimeScheduler({
   loadingText,
   doneText,
   theme,
-  selectedDays,
-  allowedDates
+  selectedDays
 }) {
   const [pickedDay, setPickedDay] = useState(null);
   const [pickedTime, setPickedTime] = useState(null);
@@ -33,10 +32,8 @@ function DayTimeScheduler({
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handlePickDay = day => {
-    if (allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))) {
-      setPickedDay(day);
-      setShowPickTime(true);
-    }
+    setPickedDay(day);
+    setShowPickTime(true);
   };
 
   const handlePickTime = time => {
@@ -61,12 +58,11 @@ function DayTimeScheduler({
   return (
     <ThemeProvider theme={theme}>
       <PopupWrapper>
+        {/* <Calendar validator={preventPastDays} pickDay={handlePickDay} /> */}
         <Calendar
-          validator={
-            day =>
-              preventPastDays(day) &&
-              allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))
-            // && selectedDays.includes(dateFns.format(day, 'dddd').toLowerCase())
+          validator={day =>
+            preventPastDays(day) &&
+            selectedDays.includes(dateFns.format(day, 'dddd').toLowerCase())
           }
           pickDay={handlePickDay}
         />
@@ -166,8 +162,7 @@ DayTimeScheduler.propTypes = {
       })
     })
   }),
-  // selectedDays: PropTypes.arrayOf(PropTypes.string),
-  allowedDates: PropTypes.arrayOf(PropTypes.string)
+  selectedDays: PropTypes.arrayOf(PropTypes.string)
 };
 
 DayTimeScheduler.defaultProps = {
@@ -201,8 +196,7 @@ DayTimeScheduler.defaultProps = {
       }
     }
   },
-  // selectedDays: [],
-  allowedDates: []
+  selectedDays: []
 };
 
 export default DayTimeScheduler;

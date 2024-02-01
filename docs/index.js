@@ -10,7 +10,7 @@ function App() {
   const [isScheduling, setIsScheduling] = useState(false);
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleErr, setScheduleErr] = useState('');
-  const allowedDates = ['2024-02-01', '2024-02-02', '2024-02-03', '2024-02-05', '2024-02-06', '2024-02-08', '2024-02-14'];
+  const allowedDates = ['2024-02-01', '2024-02-02', '2024-02-03', '2024-02-05', '2024-02-06', '2024-02-08', '2024-02-14', '2024-03-01'];
   const allowedTimeRanges = [
     [10, 0, 12, 0],
     [14, 0, 20, 0]
@@ -82,7 +82,8 @@ function App() {
       <div style={{ margin: "0 auto", marginTop: "2rem", boxShadow: "0px 0px 4px -1px black", width: "fit-content", }}>
         <DayTimeScheduler
           onConfirm={handleScheduled}
-          selectedDays={selectedDays}
+          // selectedDays={selectedDays}
+          allowedDates={allowedDates}
           timeSlotSizeMinutes={15}
           isLoading={isScheduling}
           isDone={isScheduled}
