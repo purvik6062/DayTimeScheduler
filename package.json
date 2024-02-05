@@ -1,6 +1,6 @@
 {
   "name": "@captainwalterdev/daytimescheduler",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "A React component to help with scheduling a day and time.",
   "scripts": {
     "test": "jest",

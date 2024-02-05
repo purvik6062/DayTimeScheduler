@@ -32,8 +32,20 @@ function DayTimeScheduler({
   const [showPickTime, setShowPickTime] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // //if the dates is in string
+  // const handlePickDay = day => {
+  //   if (allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))) {
+  //     setPickedDay(day);
+  //     setShowPickTime(true);
+  //   }
+  // };
+
   const handlePickDay = day => {
-    if (allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))) {
+    const isAllowedDay = allowedDates.some(date =>
+      dateFns.isSameDay(day, date)
+    );
+
+    if (preventPastDays(day) && isAllowedDay) {
       setPickedDay(day);
       setShowPickTime(true);
     }
@@ -65,7 +77,8 @@ function DayTimeScheduler({
           validator={
             day =>
               preventPastDays(day) &&
-              allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))
+              allowedDates.some(date => dateFns.isSameDay(day, date))
+            // allowedDates.includes(dateFns.format(day, 'YYYY-MM-DD'))    //if the dates is in string
             // && selectedDays.includes(dateFns.format(day, 'dddd').toLowerCase())
           }
           pickDay={handlePickDay}
@@ -167,7 +180,8 @@ DayTimeScheduler.propTypes = {
     })
   }),
   // selectedDays: PropTypes.arrayOf(PropTypes.string),
-  allowedDates: PropTypes.arrayOf(PropTypes.string)
+  // allowedDates: PropTypes.arrayOf(PropTypes.string)
+  allowedDates: PropTypes.arrayOf(PropTypes.instanceOf(Date))
 };
 
 DayTimeScheduler.defaultProps = {

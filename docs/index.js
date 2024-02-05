@@ -10,13 +10,25 @@ function App() {
   const [isScheduling, setIsScheduling] = useState(false);
   const [isScheduled, setIsScheduled] = useState(false);
   const [scheduleErr, setScheduleErr] = useState('');
-  const allowedDates = ['2024-02-01', '2024-02-02', '2024-02-03', '2024-02-05', '2024-02-06', '2024-02-08', '2024-02-14', '2024-03-01'];
-  const allowedTimeRanges = [
-    [10, 0, 12, 0],
-    [14, 0, 20, 0]
+
+  const allowedDates = [
+    new Date('2024-02-01'),
+    new Date('2024-02-02'),
+    new Date('2024-02-03'),
+    new Date('2024-02-04'),
+    new Date('2024-02-05'),
+    new Date('2024-02-08'),
+    new Date('2024-02-10'),
+    new Date('2024-02-11'),
+    new Date('2024-02-12'),
+    new Date('2024-02-14'),
   ];
 
-  const selectedDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  const allowedTimeRanges = [
+    [0, 0, 12, 0],
+    [14, 0, 20, 0],
+    [22, 0, 24, 0]
+  ];
 
   const handleScheduled = date => {
     setIsScheduling(true);
@@ -36,59 +48,49 @@ function App() {
       });
   };
 
-  function getDayName(dateString) {
-    const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    const date = new Date(dateString);
-    const dayIndex = date.getDay();
-    return dayNames[dayIndex];
-  }
 
-  function timeSlotValidator2(slotTime, allowedDates, allowedTimeRanges) {
-    const formattedDate = slotTime.toISOString().split('T')[0];
-    const isDateValid = allowedDates.includes(formattedDate);
+  function timeSlotValidator2(slotTime, allowedDates) {
+    for (const allowedDate of allowedDates) {
+      const morningTime = new Date(
+        allowedDate.getFullYear(),
+        allowedDate.getMonth(),
+        allowedDate.getDate(),
+        0,
+        0,
+        0
+      );
 
-    if (!isDateValid) {
-      return false;  // Return false for slots on non-allowed dates
+      const eveningTime = new Date(
+        allowedDate.getFullYear(),
+        allowedDate.getMonth(),
+        allowedDate.getDate(),
+        13,
+        0,
+        0
+      );
+
+      if (slotTime.getTime() >= morningTime.getTime() && slotTime.getTime() <= eveningTime.getTime()) {
+        return true; // Return true if the slot is valid for any allowed date
+      }
     }
 
-    const dayName = getDayName(formattedDate);
-    const isDayValid = selectedDays.includes(dayName);
-
-    const isTimeValid = allowedTimeRanges.some(([startHour, startMinute, endHour, endMinute]) => {
-      const startTime = new Date(
-        slotTime.getFullYear(),
-        slotTime.getMonth(),
-        slotTime.getDate(),
-        startHour,
-        startMinute,
-        0
-      );
-      const endTime = new Date(
-        slotTime.getFullYear(),
-        slotTime.getMonth(),
-        slotTime.getDate(),
-        endHour,
-        endMinute,
-        0
-      );
-      return slotTime.getTime() >= startTime.getTime() && slotTime.getTime() <= endTime.getTime();
-    });
-
-    return isDayValid && isTimeValid;
+    return false; // Return false if the slot is not valid for any allowed date
   }
+
+
 
   return (
     <>
       <div style={{ margin: "0 auto", marginTop: "2rem", boxShadow: "0px 0px 4px -1px black", width: "fit-content", }}>
+        {console.log("allowedDates", allowedDates)}
         <DayTimeScheduler
           onConfirm={handleScheduled}
-          // selectedDays={selectedDays}
           allowedDates={allowedDates}
           timeSlotSizeMinutes={15}
           isLoading={isScheduling}
           isDone={isScheduled}
           // timeSlotValidator={timeSlotValidator}
-          timeSlotValidator={(slotTime) => timeSlotValidator2(slotTime, allowedDates, allowedTimeRanges)}
+          timeSlotValidator={(slotTime) => timeSlotValidator2(slotTime, allowedDates)}
         />
       </div>
     </>
